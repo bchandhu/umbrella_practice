@@ -1,7 +1,8 @@
 pp "howdy"
 require "http"
 
-pirate_weather_api_key="3RrQrvLmiUayQ84JSxL8D2aXw99yRKlx1N4qFDUE"
+pirate_weather_api_key=ENV.fetch("PIRATE_WEATHER_KEY")
+
 pirate_weather_url = "https://api.pirateweather.net/forecast/" + pirate_weather_api_key + "/41.8887,-87.6355"
 
 # Place a GET request to the URL
