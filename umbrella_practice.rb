@@ -3,7 +3,6 @@ pp "howdy"
 pp "Where are you located?"
 
 user_location=gets.chomp
-
 #user_location=gets.chomp.gsub(" ","%20")
 #user_location="Chicago"
 
@@ -32,21 +31,17 @@ loc= geo.fetch("location")
 p latitude=loc.fetch("lat")
 p longitude=loc.fetch("lng")
 
-#require "http"
+pirate_weather_api_key = ENV.fetch("PIRATE_WEATHER_KEY")
 
-# pirate_weather_api_key=ENV.fetch("PIRATE_WEATHER_KEY")
+# Assemble the full URL string by adding the first part, the API token, and the last part together
+pirate_weather_url = "https://api.pirateweather.net/forecast/" + pirate_weather_api_key + "/41.8887,-87.6355"
 
-# pirate_weather_url = "https://api.pirateweather.net/forecast/" + pirate_weather_api_key + "/41.8887,-87.6355"
+raw_pirate_weather_data = HTTP.get(pirate_weather_url)
 
-# # Place a GET request to the URL
-# raw_response = HTTP.get(pirate_weather_url)
+parsed_pirate_weather_data = JSON.parse(raw_pirate_weather_data)
 
-# require "json"
+currently_hash = parsed_pirate_weather_data.fetch("currently")
 
-# parsed_response = JSON.parse(raw_response)
+current_temp = currently_hash.fetch("temperature")
 
-# currently_hash = parsed_response.fetch("currently")
-
-# current_temp = currently_hash.fetch("temperature")
-
-# puts "The current temperature is " + current_temp.to_s + "."
+puts "It is currently #{current_temp}°F."
